@@ -1,0 +1,15 @@
+1. Quanto tempo você gastou no teste?
+	Foi gasto em média 6 a 8 horas de programação;
+
+2. O que você acrescentaria se tivesse mais tempo?
+	Persistir as informações em um banco de dados;
+	Migrar para plataforma WEB utilizando API Rest;
+
+3. Como você melhoraria as APIs do produto que precisava consumir?
+	Para desenvolver um projeto mais simples possível, foi utilizado recursos locais e em memória, não sendo necessário consumir a API WireMock;
+	
+4. O que você achou mais difícil?
+	Nada;
+
+5. Como você achou a experiência geral, algum feedback para nós?
+	Achei legal, tendo apenas que deixar mais claro oque se pede, pois confudi o termo "Promoção" com  "Desconto" que ao meu entender são coisas distintas;

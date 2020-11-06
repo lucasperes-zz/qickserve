@@ -1,0 +1,1 @@
+Basta executar a classe principal: br.com.w2s.qickserve.AppMain
