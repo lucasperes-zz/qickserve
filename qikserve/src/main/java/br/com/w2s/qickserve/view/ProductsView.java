@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +19,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import br.com.w2s.qickserve.model.ProductModel;
-import br.com.w2s.qickserve.service.ProductsService;
+import br.com.w2s.qickserve.service.IProducts;
+import br.com.w2s.qickserve.service.ProductsRestWireMockService;
 import br.com.w2s.qickserve.tablemodel.ProductsTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * @author Lucas P. Soares (lucasperes20@gmail.com)
@@ -31,7 +32,7 @@ public class ProductsView extends JDialog {
 	
 	private static final long serialVersionUID = -6218318998059309745L;
 	
-	private ProductsService service;
+	private IProducts service;
 	private ProductModel product;
 	
 	private JTextField txtNomeProduto;
@@ -52,7 +53,7 @@ public class ProductsView extends JDialog {
 	}
 	
 	private void initComponents() {
-		service = new ProductsService();
+		service = new ProductsRestWireMockService();
 		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 637, 455);
@@ -150,6 +151,9 @@ public class ProductsView extends JDialog {
 	 * @return the product
 	 */
 	public ProductModel getProduct() {
+		if(product != null) {
+			product = service.find(product.getId());
+		}
 		return product;
 	}
 	

@@ -1,11 +1,14 @@
 package br.com.w2s.qickserve.service;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.w2s.qickserve.model.ProductModel;
+import br.com.w2s.qickserve.model.TypeVoucher;
 import br.com.w2s.qickserve.model.VoucherModel;
 
 /**
@@ -13,8 +16,9 @@ import br.com.w2s.qickserve.model.VoucherModel;
  * @date 5 de nov de 2020
  *
  */
-public class ProductsService {
+public class ProductsMockService implements IProducts {
 	
+	@Override
 	public List<ProductModel> list() {
 		List<ProductModel> products = new ArrayList<>();
 		
@@ -44,8 +48,9 @@ public class ProductsService {
 		// Desconto
 		VoucherModel vProd1 = new VoucherModel();
 		vProd1.setId(1L);
-		vProd1.setValue(new BigDecimal("2.25"));
-		prod4.setVoucher(vProd1);
+		vProd1.setType(TypeVoucher.FLAT_PERCENT);
+		vProd1.setAmount(new BigDecimal("15"));
+		prod4.setVouchers(Arrays.asList(vProd1));
 		products.add(prod4);
 		
 		ProductModel prod5 = new ProductModel();
@@ -61,8 +66,9 @@ public class ProductsService {
 		// Desconto
 		VoucherModel vProd2 = new VoucherModel();
 		vProd2.setId(2L);
-		vProd2.setValue(new BigDecimal("0.20"));
-		prod6.setVoucher(vProd2);
+		vProd2.setType(TypeVoucher.FLAT_PERCENT);
+		vProd2.setAmount(new BigDecimal("5"));
+		prod6.setVouchers(Arrays.asList(vProd2));
 		products.add(prod6);
 		
 		ProductModel prod7 = new ProductModel();
@@ -78,8 +84,9 @@ public class ProductsService {
 		// Desconto
 		VoucherModel vProd3 = new VoucherModel();
 		vProd3.setId(3L);
-		vProd3.setValue(new BigDecimal("2"));
-		prod8.setVoucher(vProd3);
+		vProd3.setType(TypeVoucher.FLAT_PERCENT);
+		vProd3.setAmount(new BigDecimal("10"));
+		prod8.setVouchers(Arrays.asList(vProd3));
 		products.add(prod8);
 		
 		ProductModel prod9 = new ProductModel();
@@ -103,6 +110,7 @@ public class ProductsService {
 		return products;
 	}
 	
+	@Override
 	public List<ProductModel> list(String filter) {
 		if(filter != null) {
 			return list().stream()
@@ -114,6 +122,14 @@ public class ProductsService {
 		} else {
 			return list();
 		}
+	}
+	
+	@Override
+	public ProductModel find(Serializable id) {
+		return list().stream()
+				.filter(prod -> prod.getId().equals(id))
+				.collect(Collectors.toList())
+				.get(0);
 	}
 
 }

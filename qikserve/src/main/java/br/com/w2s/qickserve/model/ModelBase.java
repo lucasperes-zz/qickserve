@@ -1,5 +1,7 @@
 package br.com.w2s.qickserve.model;
 
+import java.io.Serializable;
+
 /**
  * @author Lucas P. Soares (lucasperes20@gmail.com)
  * @date 5 de nov de 2020
@@ -7,19 +9,19 @@ package br.com.w2s.qickserve.model;
  */
 public abstract class ModelBase {
 
-	private Long id;
+	private Serializable id;
 
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public Serializable getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(Serializable id) {
 		this.id = id;
 	}
 

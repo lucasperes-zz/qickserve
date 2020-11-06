@@ -1,17 +1,23 @@
 package br.com.w2s.qickserve.model;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Lucas P. Soares (lucasperes20@gmail.com)
  * @date 5 de nov de 2020
  *
  */
+@XmlRootElement
 public class ProductModel extends ModelBase {
 
 	private String name;
 	private BigDecimal price;
-	private VoucherModel voucher;
+	@XmlElement(name = "promotions")
+	private List<VoucherModel> vouchers;
 	
 	/**
 	 * @return the name
@@ -38,16 +44,16 @@ public class ProductModel extends ModelBase {
 		this.price = price;
 	}
 	/**
-	 * @return the voucher
+	 * @return the vouchers
 	 */
-	public VoucherModel getVoucher() {
-		return voucher;
+	public List<VoucherModel> getVouchers() {
+		return vouchers;
 	}
 	/**
-	 * @param voucher the voucher to set
+	 * @param vouchers the vouchers to set
 	 */
-	public void setVoucher(VoucherModel voucher) {
-		this.voucher = voucher;
+	public void setVouchers(List<VoucherModel> vouchers) {
+		this.vouchers = vouchers;
 	}
 	
 }

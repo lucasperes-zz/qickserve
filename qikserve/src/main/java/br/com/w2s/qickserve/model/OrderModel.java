@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.w2s.qickserve.utils.AppUtils;
+
 /**
  * @author Lucas P. Soares (lucasperes20@gmail.com)
  * @date 5 de nov de 2020
@@ -79,9 +81,39 @@ public class OrderModel extends ModelBase {
 		// Verifica o voucher
 		BigDecimal vDesc = BigDecimal.ZERO;
 		BigDecimal vLiq = item.getSubtotal();
-		if(product.getVoucher() != null) {
-			vDesc = new BigDecimal(quantity).multiply(product.getVoucher().getValue());
-			vLiq = item.getSubtotal().subtract(vDesc);
+		if(product.getVouchers() != null && !product.getVouchers().isEmpty()) {
+			VoucherModel voucher = product.getVouchers().get(0); // Avaliado a API WireMock e verificado que sempre retorna 1 no Array
+			// Basic Percent
+			if(TypeVoucher.FLAT_PERCENT.equals(voucher.getType())) {				
+				vDesc = AppUtils.calculatePercent(item.getSubtotal(), voucher.getAmount());
+				vLiq = item.getSubtotal().subtract(vDesc);
+			}
+			// Price Override
+			else if(TypeVoucher.QTY_BASED_PRICE_OVERRIDE.equals(voucher.getType())) {
+				// Verifica a quantidade minima
+				if(quantity >= voucher.getRequiredQuantity()) {
+					// Percorre as quantidades para dividir em pares de RequiredQuantity
+					for(int i = 0; i <= (quantity - voucher.getRequiredQuantity());) {
+						// Pega o valor original
+						BigDecimal vOrig = new BigDecimal(voucher.getRequiredQuantity()).multiply(product.getPrice());
+						vDesc = vDesc.add(vOrig.subtract(voucher.getPrice()));
+						i += voucher.getRequiredQuantity();
+					}
+					vLiq = item.getSubtotal().subtract(vDesc);
+				}
+			}
+			// Buy X Get Y
+			else if(TypeVoucher.BUY_X_GET_Y_FREE.equals(voucher.getType())) {
+				// Verifica a quantidade minima
+				if(quantity >= voucher.getRequiredQuantity()) {
+					// Percorre as quantidades para dividir em pares de RequiredQuantity
+					for(int i = 0; i <= (quantity - voucher.getRequiredQuantity());) {
+						vDesc = vDesc.add(new BigDecimal(voucher.getFreeQuantity()).multiply(product.getPrice()));
+						i += voucher.getRequiredQuantity();
+					}
+					vLiq = item.getSubtotal().subtract(vDesc);
+				}
+			}
 		}
 		item.setDiscount(vDesc);
 		item.setTotal(vLiq);
