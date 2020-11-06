@@ -127,16 +127,16 @@ public class CartView extends JDialog {
 		table = new JTable();
 		table.setBorder(null);
 		table.setBounds(10, 112, 601, 259);
-		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tableModel = new ItemsOrderTableModel(new ArrayList<>());
 		table.setModel(tableModel);
 		table.getColumnModel().getColumn(0).setPreferredWidth(80);
 		table.getColumnModel().getColumn(1).setPreferredWidth(320);
-		table.getColumnModel().getColumn(2).setPreferredWidth(120);
-		table.getColumnModel().getColumn(3).setPreferredWidth(160);
-		table.getColumnModel().getColumn(4).setPreferredWidth(160);
-		table.getColumnModel().getColumn(5).setPreferredWidth(160);
-		table.getColumnModel().getColumn(6).setPreferredWidth(160);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(140);
+		table.getColumnModel().getColumn(4).setPreferredWidth(140);
+		table.getColumnModel().getColumn(5).setPreferredWidth(140);
+		table.getColumnModel().getColumn(6).setPreferredWidth(140);
 		
 		JScrollPane scrollTable = new JScrollPane(table);
 		scrollTable.setBounds(10, 42, 553, 216);
